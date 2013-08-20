@@ -1,0 +1,23 @@
+// Place all the styles related to the Projects controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.revision-container {
+  margin: 40px 0px;
+  
+  header {
+    border-bottom: 1px solid #ccc;
+    
+    h3 {
+      display: inline;
+    }
+    
+    a {
+      margin-left: 10px;
+    }
+    
+    div {
+      margin-top: 10px;
+    }
+  }
+}

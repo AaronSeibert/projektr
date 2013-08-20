@@ -1,0 +1,8 @@
+<h1>Welcome to <%= ProjectManager::Application.config.site_name %></h1>
+
+<% if user_signed_in? %>
+    <p>Select an item from the menu above to get started</p>
+<% else %>
+    <p>Please log in or click on the link provided via email</p>
+<% end %>
+

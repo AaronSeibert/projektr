@@ -1,0 +1,21 @@
+<p>
+    <h1><%= @client.name %></h1>
+</p>
+
+<p id="notice"><%= notice %></p>
+
+<table class="table table-striped">
+    <caption><strong>Project List</strong> - <%= link_to "Add new project", new_project_path(:client_id => @client) %></caption>
+    <thead>
+        <th>Name</th>
+        <th>Active</th>
+    </thead>
+    <tbody>
+        <% @client.projects.each do |project|%>
+        <tr>
+            <td><%= link_to project.name, project_path(project) %></td>
+            <td><%= convert_true_false(project.active) %></td>
+        </tr>
+        <% end %>
+    </tbody>
+</table>

@@ -1,0 +1,12 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <h1><%= @revision.name %></h1>
+  <% @revision.screenshots.each do |screenshot| %>
+    <%= image_tag screenshot.image_url(:thumb).to_s %>
+  <% end %>
+</p>
+
+<%= link_to "Add Screenshot", new_screenshot_path(:revision_id => @revision) %>
+<%= link_to 'Edit', edit_revision_path(@revision) %> |
+<%= link_to 'Back', revisions_path %>

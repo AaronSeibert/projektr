@@ -1,0 +1,19 @@
+<p>
+    <h1>Clients</h1>
+    <%= link_to "Add new client", new_client_path %>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <th>Name</th>
+        <th># of Projects</th>
+    </thead>
+    <tbody>
+    <% @Clients.each do |client| %>
+        <tr>
+            <td><%= link_to client.name, client_path(client) %></td>
+            <td><%= client.projects.count %></td>
+        </tr>
+    <% end %>
+    </tbody>
+</table>

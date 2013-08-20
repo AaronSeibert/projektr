@@ -1,0 +1,12 @@
+<h1>Listing screenshots</h1>
+
+
+<% @screenshots.each do |screenshot| %>
+    <%= screenshot.name %>
+    <%= image_tag screenshot.image_url(:thumb).to_s %>
+    <%= link_to 'Destroy', screenshot, method: :delete, data: { confirm: 'Are you sure?' } %>
+<% end %>
+
+
+<br>
+

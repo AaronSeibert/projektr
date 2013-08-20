@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<% if user_signed_in? %>
+    <div id="edit">
+        <%= link_to 'Edit', edit_screenshot_path(@screenshot) %> |
+        <%= link_to "Delete", @screenshot, method: :delete, data: { confirm: 'Are you sure?' } %>
+    </div>
+<% end %>
+
+<p>
+  <%= image_tag @screenshot.image_url.to_s %>
+</p>
+
+
+<%= link_to 'Back to Project', project_path(@screenshot.revision.project) %>

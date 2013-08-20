@@ -1,0 +1,33 @@
+<h1>Add Project</h1>
+
+<%= form_for :project, url: projects_path do |f| %>
+
+<% if @project.errors.any? %>
+  <div id="errorExplanation">
+    <h2><%= pluralize(@project.errors.count, "error") %> prohibited
+      this post from being saved:</h2>
+    <ul>
+    <% @project.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+  <% end %>
+  
+    <p>
+        <%= f.label :client_id %>
+        <%= f.collection_select :client_id, Client.all, :id, :name, :selected => params[:client_id]%>
+    </p>
+  
+    <p>
+        <%= f.label :name %><br>
+        <%= f.text_field :name %>
+    </p>
+    
+    <p> 
+        <%= f.label :active %><br>
+        <%= f.check_box :active, {checked: true} %>
+    <p>
+        <%= f.submit %>
+    </p>
+<% end %>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ProjectManager</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<div class="navbar navbar-inverse">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="brand" href="/">Freehand Media</a>
+            <%= render_navigation :renderer => :bootstrap_renderer %>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <%= render 'layouts/messages' %>
+    <%= yield %>
+</div>
+<%= yield :scripts %>
+</body>
+</html>
