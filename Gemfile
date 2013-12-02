@@ -21,6 +21,7 @@ gem 'simple-navigation'
 gem 'bourbon'
 gem 'devise'
 gem 'font-awesome-sass'
+gem 'friendly_id', '~> 5.0.0'
 
 # Gems used only for assets and not required
 # in production environments by default.

@@ -77,17 +77,13 @@ class UsersController < ApplicationController
       logger.debug params
       @user = params[:user]
       if (params[:user].has_key?(:superuser) && !current_user.is_superuser?)
-        logger.debug "nope. no su"
-        raise 'You do not have the required permissions for this action'
-      else
-        logger.debug "Do we have su key? " + params[:user].has_key?(:superuser).to_s
-        logger.debug "How about is current user SU? " + current_user.is_superuser?.to_s
+        render :status => :forbidden
       end
     end
     
     def admin_check
       if (!current_user.is_admin? || !current_user.is_superuser?)
-        raise 'You do not have the required permissions for this action'
+        render :status => :forbidden
       end
     end
   
