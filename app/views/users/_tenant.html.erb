@@ -1,0 +1,5 @@
+<% if current_user.is_admin? %>
+  <div class="form-group">
+    <%= f.collection_select :tenant_id, Tenant.all, :id, :name, {:include_blank => 'Select Tenant...'}, {:class => "form-control"} %>
+  </div>
+<% end %>

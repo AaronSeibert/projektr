@@ -11,35 +11,39 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :email %>
-    <div class="controls">
-      <%= f.email_field :email %>
+  <div class="row">
+    <div class="col-md-4">
+        <div class="form-group">
+        <%= f.label :email %>
+        <%= f.email_field :email, :class => "form-control" %>
+      </div>
+    
+      <div class="form-group">
+        <%= f.label :password, "Password" %>
+        <%= f.password_field :password, :class => "form-control"%>
+      </div>
+    
+      <div class="form-group">
+        <%= f.label :password_confirmation %>
+        <%= f.password_field :password_confirmation, :class => "form-control" %>
+      </div>
+      
+      <div class="form-group">
+        <%= f.collection_select :tenant_id, Tenant.all, :id, :name, {:include_blank => 'Select Tenant'}, {:class => "form-control"} %>
+      </div>
+      
+      <div class="checkbox">
+        <%= f.label :admin, 'Administrator', :class => "checkbox inline"  %>
+        <%= f.check_box :admin %>
+      </div>
+      <% if current_user.is_superuser? %>
+        <div class="checkbox">
+          <%= f.label :superuser, 'Super User', :class => "checkbox inline"  %>
+          <%= f.check_box :superuser %>
+        </div>
+      <% end %>
+    
+      <%= render 'layouts/forms/submit', :f => f %>
     </div>
-  </div>
-
-  <div class="field">
-    <%= f.label :password, "Password" %>
-    <div class="controls">
-      <%= f.password_field :password %>
-    </div>
-  </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation %>
-    <div class="controls">
-      <%= f.password_field :password_confirmation %>
-    </div>
-  </div>
-  
-  <div class="field">
-    <%= f.label :admin %>
-    <div class="controls">
-      <%= f.check_box :admin %>
-    </div>
-  </div>
-
-  <div class="actions">
-    <%= f.submit %>
   </div>
 <% end %>

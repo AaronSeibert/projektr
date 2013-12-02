@@ -9,14 +9,12 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
+ *= require font-awesome
  */
 
 @import "bourbon";
 @import "bootstrap";
-@import "bootstrap-responsive";
 @import "clients";
-@import "font-awesome";
-@import "font-awesome-ie7";
 @import "projects";
 @import "revisions";
 @import "screenshots";

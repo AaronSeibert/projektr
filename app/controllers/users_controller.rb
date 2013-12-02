@@ -1,13 +1,27 @@
 class UsersController < ApplicationController
   
   before_filter :authenticate_user!
+  before_filter :su_check, :only => [:create, :update]
+  before_filter :admin_check, :except => [:show, :edit, :update]
   
   def index
-    @users = User.all
+    if current_user.is_superuser?
+      @users = User.all
+    else
+      @users = current_user.tenant.users
+    end
   end
 
   def show
-    @user = User.find(params[:id])
+    if current_user.is_superuser?
+      @user = User.find(params[:id])
+    elsif current_user.is_admin? && User.find(params[:id].tenant == current_user.tenant)
+      @user = User.find(params[:id])
+    elsif User.find(params[:id]) != current_user
+      redirect_to current_user
+    else
+      @user = User.find(params[:id])
+    end
   end
 
   def new
@@ -15,13 +29,20 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @user = User.find(params[:id])
+    if current_user.is_superuser? || (current_user.is_admin? && User.find(params[:id].tenant == current_user.tenant))
+      @user = User.find(params[:id])
+    elsif User.find(params[:id]) != current_user
+      redirect_to edit_user_path(current_user)
+    else
+      @user = User.find(params[:id])
+    end
   end
 
   def create
     @user = User.new(user_params)
 
     if @user.save
+      UserMailer.welcome_email(@user).deliver
       redirect_to @user, notice: 'User was successfully created.'
     else
       render :action => 'new'
@@ -51,6 +72,25 @@ class UsersController < ApplicationController
   end
   
   private
+    def su_check
+      logger.debug "checking su"
+      logger.debug params
+      @user = params[:user]
+      if (params[:user].has_key?(:superuser) && !current_user.is_superuser?)
+        logger.debug "nope. no su"
+        raise 'You do not have the required permissions for this action'
+      else
+        logger.debug "Do we have su key? " + params[:user].has_key?(:superuser).to_s
+        logger.debug "How about is current user SU? " + current_user.is_superuser?.to_s
+      end
+    end
+    
+    def admin_check
+      if (!current_user.is_admin? || !current_user.is_superuser?)
+        raise 'You do not have the required permissions for this action'
+      end
+    end
+  
     # Use callbacks to share common setup or constraints between actions.
     def set_revision
       @revision = Revision.find(params[:id])
@@ -58,6 +98,6 @@ class UsersController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def user_params
-      params.require(:user).permit(:email, :password, :admin)
+      params.require(:user).permit(:email, :password, :admin, :superuser, :tenant_id)
     end
 end

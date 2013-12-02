@@ -1,5 +1,7 @@
 ProjectManager::Application.routes.draw do
   
+  resources :tenants
+
   root :to => 'home#index'
   
   get "home/index"

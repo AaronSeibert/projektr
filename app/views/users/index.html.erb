@@ -4,6 +4,10 @@
   <thead>
     <tr>
       <th>Email</th>
+      <% if current_user.is_superuser? %>
+        <th>Superuser</th>
+      <% end %>
+      <th>Administrator</th>
       <th>Actions</th>
     </tr>
   </thead>
@@ -11,6 +15,22 @@
     <% @users.each do |user| %>
       <tr>
         <td><%= link_to user.email, user %></td>
+        <% if current_user.is_superuser? %>
+          <td>
+            <% if user.is_superuser? %>
+              <i class="fa fa-check text-danger"></i>
+            <% else %>
+              <i class="fa fa-times"></i>
+            <% end %>
+          </td>
+        <% end %>
+        <td>
+          <% if user.is_admin? %>
+            <i class="fa fa-check text-warning"></i>
+          <% else %>
+            <i class="fa fa-times"></i>
+          <% end %>
+        </td>
         <td>
           <%= link_to 'Edit', edit_user_path(user) %>
           <%= link_to 'Delete', user_path(user), :method => 'delete', :confirm => 'Are you sure?' %>

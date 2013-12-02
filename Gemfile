@@ -20,6 +20,7 @@ gem 'mini_magick'
 gem 'simple-navigation'
 gem 'bourbon'
 gem 'devise'
+gem 'font-awesome-sass'
 
 # Gems used only for assets and not required
 # in production environments by default.
