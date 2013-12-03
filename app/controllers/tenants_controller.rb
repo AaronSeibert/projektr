@@ -3,7 +3,7 @@ class TenantsController < ApplicationController
 
   # GET /tenants
   def index
-    @tenants = Tenant.all
+    @tenants = Tenant.accessible_by(current_ability)
   end
 
   # GET /tenants/1

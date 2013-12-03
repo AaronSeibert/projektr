@@ -11,13 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131202042425) do
+ActiveRecord::Schema.define(version: 20131203042655) do
 
   create_table "clients", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "tenant_id"
   end
+
+  add_index "clients", ["tenant_id"], name: "index_clients_on_tenant_id"
 
   create_table "friendly_id_slugs", force: true do |t|
     t.string   "slug",                      null: false
@@ -39,10 +42,12 @@ ActiveRecord::Schema.define(version: 20131202042425) do
     t.datetime "updated_at"
     t.boolean  "active"
     t.string   "slug"
+    t.integer  "tenant_id"
   end
 
   add_index "projects", ["client_id"], name: "index_projects_on_client_id"
   add_index "projects", ["slug"], name: "index_projects_on_slug", unique: true
+  add_index "projects", ["tenant_id"], name: "index_projects_on_tenant_id"
 
   create_table "revisions", force: true do |t|
     t.text     "name"
@@ -89,8 +94,12 @@ ActiveRecord::Schema.define(version: 20131202042425) do
     t.boolean  "admin"
     t.integer  "tenant_id"
     t.boolean  "superuser"
+    t.integer  "client_id"
+    t.string   "first_name"
+    t.string   "last_name"
   end
 
+  add_index "users", ["client_id"], name: "index_users_on_client_id"
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   add_index "users", ["tenant_id"], name: "index_users_on_tenant_id"

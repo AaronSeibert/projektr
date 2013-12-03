@@ -1,0 +1,35 @@
+<nav class="navbar navbar-inverse" role="navigation">
+    <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <%= render 'layouts/navigation/branding' %>
+  </div>
+  <div class="collapse navbar-collapse">
+    <!-- Collect the nav links, forms, and other content for toggling -->
+  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <ul class="nav navbar-nav">
+      <% if user_signed_in? %>
+        <%= render 'layouts/navigation/link', {:path => clients_path, :text => "Clients", :item => Client} %>
+        <%= render 'layouts/navigation/link', {:path => projects_path, :text => "Projects", :item => Project} %>
+      <% end %>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <%= render 'layouts/navigation/login_items' %>
+      <li class="dropdown">
+        <% if user_signed_in? && current_user.is_admin? %>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <%= render 'layouts/navigation/link', {:path => tenants_path, :text => "Tenants", :item => Tenant} %>
+            <%= render 'layouts/navigation/link', {:path => users_path, :text => "Users", :item => User} %>
+            <li class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+          </ul>
+        <% end %>
+      </li>
+    </ul>
+  </div><!-- /.navbar-collapse -->
+</nav>

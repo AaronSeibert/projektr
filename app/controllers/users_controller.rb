@@ -1,27 +1,14 @@
 class UsersController < ApplicationController
+  load_and_authorize_resource
   
   before_filter :authenticate_user!
-  before_filter :su_check, :only => [:create, :update]
-  before_filter :admin_check, :except => [:show, :edit, :update]
   
   def index
-    if current_user.is_superuser?
-      @users = User.all
-    else
-      @users = current_user.tenant.users
-    end
+    @users = User.accessible_by(current_ability)
   end
 
   def show
-    if current_user.is_superuser?
-      @user = User.find(params[:id])
-    elsif current_user.is_admin? && User.find(params[:id].tenant == current_user.tenant)
-      @user = User.find(params[:id])
-    elsif User.find(params[:id]) != current_user
-      redirect_to current_user
-    else
-      @user = User.find(params[:id])
-    end
+    @user = User.find(params[:id])
   end
 
   def new
@@ -29,23 +16,21 @@ class UsersController < ApplicationController
   end
 
   def edit
-    if current_user.is_superuser? || (current_user.is_admin? && User.find(params[:id].tenant == current_user.tenant))
-      @user = User.find(params[:id])
-    elsif User.find(params[:id]) != current_user
-      redirect_to edit_user_path(current_user)
-    else
-      @user = User.find(params[:id])
-    end
+    @user = User.find(params[:id])
   end
 
   def create
     @user = User.new(user_params)
-
-    if @user.save
-      UserMailer.welcome_email(@user).deliver
-      redirect_to @user, notice: 'User was successfully created.'
-    else
-      render :action => 'new'
+    respond_to do |format|
+      if @user.save
+        UserMailer.welcome_email(@user).deliver
+        format.html { redirect_to users_url, :success => "User created successfully!"}
+        format.json { render action: 'show', status: :created, location: @user }
+      else
+        format.html { render action: 'new' }
+        format.js   { render action: 'new' }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -56,12 +41,15 @@ class UsersController < ApplicationController
     end
     
     @user = User.find(params[:id])
-
-    if @user.update_attributes(user_params)
-      sign_in(@user, :bypass => true) if @user == current_user
-      redirect_to @user, notice: 'User was successfully updated.'
-    else
-      render :action => 'edit'
+    respond_to do |format|
+      if @user.update(user_params)
+        #sign_in(@user, :bypass => true) if @user == current_user
+        format.html { redirect_to users_url, :success => "User has been updated" }
+      else
+        format.html { render action: 'edit' }
+        format.js   { render action: 'edit' }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -72,20 +60,6 @@ class UsersController < ApplicationController
   end
   
   private
-    def su_check
-      logger.debug "checking su"
-      logger.debug params
-      @user = params[:user]
-      if (params[:user].has_key?(:superuser) && !current_user.is_superuser?)
-        render :status => :forbidden
-      end
-    end
-    
-    def admin_check
-      if (!current_user.is_admin? || !current_user.is_superuser?)
-        render :status => :forbidden
-      end
-    end
   
     # Use callbacks to share common setup or constraints between actions.
     def set_revision
@@ -94,6 +68,6 @@ class UsersController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def user_params
-      params.require(:user).permit(:email, :password, :admin, :superuser, :tenant_id)
+      params.require(:user).permit(:email, :password, :password_confirmation, :admin, :superuser, :tenant_id, :client_id, :first_name, :last_name)
     end
 end

@@ -1,9 +1,10 @@
 class ProjectsController < ApplicationController
-  
+  load_and_authorize_resource :find_by => :slug
   before_filter :authenticate_user!, :except => [:show]
   
+  
   def index
-    @Projects = Project.all
+    @Projects = Project.accessible_by(current_ability)
   end
   
   def new

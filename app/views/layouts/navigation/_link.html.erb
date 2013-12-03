@@ -1,0 +1,9 @@
+<% if can? :read, item %>
+  <% if request.env['PATH_INFO'] == path %>
+    <li class="active">
+  <% else %>
+    <li>
+  <%end%>
+  <%= link_to text, path %>
+  </li>
+<% end %>

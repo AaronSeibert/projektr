@@ -1,49 +1,96 @@
-<%= form_for @user do |f| %>
-  <% if @user.errors.any? %>
-    <div class="error_explanation">
-      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+<%= render partial: 'global/forms/modal_header', locals: {:title => "Add New User"} %>
+<%= form_for(@user, :remote => true, :html => {:class => "form-horizontal", :role => "form", 'data-update-target' => 'update-container' }) do |f| %> 
+<div class="modal-body update-container">
+    
+  <%= render "global/flash" %>
 
-      <ul>
-      <% @user.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+  <fieldset>
+    <legend>User Information</legend>
+    <div class="form-group">
+      <%= f.label :first_name, :class => "col-lg-3 control-label" %>
+      <div class="col-lg-9">
+        <%= f.text_field :first_name, :class => "form-control" %>
+      </div>
     </div>
-  <% end %>
 
-  <div class="row">
-    <div class="col-md-4">
-        <div class="form-group">
-        <%= f.label :email %>
+
+    <div class="form-group">  
+      <%= f.label :last_name, :class => "col-lg-3 control-label" %>
+      <div class="col-lg-9">
+        <%= f.text_field :last_name, :class => "form-control" %>
+      </div>
+    </div>
+    
+  </fieldset>
+
+  <fieldset>
+    <legend>Login Information</legend>
+
+    <div class="form-group">
+      <%= f.label :email, :class => "col-lg-3 control-label" %>
+      <div class="col-lg-9">
         <%= f.email_field :email, :class => "form-control" %>
       </div>
-    
-      <div class="form-group">
-        <%= f.label :password, "Password" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :password, "Password", :class => "col-lg-3 control-label" %>
+      <div class="col-lg-9">
         <%= f.password_field :password, :class => "form-control"%>
       </div>
+    </div>
+      
     
-      <div class="form-group">
-        <%= f.label :password_confirmation %>
+    <div class="form-group">
+      <%= f.label :password_confirmation, 'Confirmation', :class => "col-lg-3 control-label" %>
+      <div class="col-lg-9">
         <%= f.password_field :password_confirmation, :class => "form-control" %>
       </div>
+    </div>
+  </fieldset>
+  
+  <% if current_user.is_admin? %>
+    <fieldset>
+      <legend>Associations</legend>
       
       <div class="form-group">
-        <%= f.collection_select :tenant_id, Tenant.all, :id, :name, {:include_blank => 'Select Tenant'}, {:class => "form-control"} %>
+        <%= f.label :client_id, 'Client', :class => "col-lg-3 control-label"  %>
+        <div class="col-lg-9">
+          <%= f.collection_select :client_id, Client.accessible_by(current_ability), :id, :name, {:include_blank => 'None'}, {:class => "form-control"} %>
+        </div>
       </div>
-      
-      <div class="checkbox">
-        <%= f.label :admin, 'Administrator', :class => "checkbox inline"  %>
-        <%= f.check_box :admin %>
-      </div>
+    
       <% if current_user.is_superuser? %>
-        <div class="checkbox">
-          <%= f.label :superuser, 'Super User', :class => "checkbox inline"  %>
-          <%= f.check_box :superuser %>
+        <div class="form-group">
+          <%= f.label :tenant_id, 'Tenant', :class => "col-lg-3 control-label" %>
+          <div class="col-lg-9">
+            <%= f.collection_select :tenant_id, Tenant.all, :id, :name, {}, {:class => "form-control"} %>
+          </div>
         </div>
       <% end %>
-    
-      <%= render 'layouts/forms/submit', :f => f %>
-    </div>
-  </div>
+    </fieldset>
+  <% end %> 
+  
+  <% if !current_user.is_user? %>
+    <fieldset>
+      <legend>Assign Permission(s)</legend>
+      <div class="col-lg-4">
+        <div class="checkbox">
+          <%= f.label :admin, 'Administrator', :class => "checkbox inline"  %>
+          <%= f.check_box :admin %>
+        </div>
+      </div>
+      
+      <% if current_user.is_superuser? %>
+        <div class="col-lg-4">
+          <div class="checkbox">
+            <%= f.label :superuser, 'Super User', :class => "checkbox inline"  %>
+            <%= f.check_box :superuser %>
+          </div>
+        </div>
+      <% end %>
+    </fieldset>
+  <% end %>
+</div>
+<%= render partial: "global/forms/modal_footer", locals: { :f => f } %>
 <% end %>
