@@ -1,7 +1,9 @@
 <%= render partial: 'global/forms/modal_header', locals: {:title => "Add New User"} %>
 <%= form_for(@user, :remote => true, :html => {:class => "form-horizontal", :role => "form", 'data-update-target' => 'update-container' }) do |f| %> 
 <div class="modal-body update-container">
-    
+  <div id="form-errors">
+    <%= modal_flash(@user, "user") %>
+  </div>  
   <%= render "global/flash" %>
 
   <fieldset>
