@@ -7,9 +7,18 @@ bindModalForm = ->
       
 fadeFlashMessages = ->
   $(".alert").delay(2000).fadeOut(2000)
+  
+prettyPhotoBind = ->
+  $("a[data-lightbox]").prettyPhoto(
+    allow_resize: false
+    theme:        'dark_square'
+    social_tools: ''
+    show_title:   false
+  )
     
 onLoadEvents = ->
-  fadeFlashMessages()  
+  fadeFlashMessages()
+  prettyPhotoBind()
       
 $(document).on 'ready page:load', onLoadEvents
 

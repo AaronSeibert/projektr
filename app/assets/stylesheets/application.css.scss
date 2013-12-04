@@ -18,7 +18,7 @@
 @import "projects";
 @import "revisions";
 @import "screenshots";
-@import "lightbox";
+@import "prettyPhoto";
 
 
 .float-left, .fl {
@@ -35,4 +35,8 @@
 
 .align-right, .ar {
   text-align: right;
+}
+
+.pp_overlay {
+  position: fixed !important;
 }
