@@ -10,9 +10,9 @@ class UserMailer < ActionMailer::Base
   def welcome_email(user)
     
   Rails.env.production?
-    @url = 'http://172.16.25.150:3000'
+    @url = 'http://projects.binaryitsystems.com'
   Rails.env.development?
-    @url = 'http://172.16.25.150:3000'
+    @url = 'http://still-beach-8899.herokuapp.com'
   Rails.env.staging?
     @url = 'http://still-beach-8899.herokuapp.com'
     
