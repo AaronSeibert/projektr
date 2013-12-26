@@ -8,7 +8,7 @@ gem 'rails', '4.0.0'
 group :production do
   gem 'execjs'
   gem 'therubyracer'
-  gem 'mysql'
+  gem 'pg'
 end
 
 group :development do
