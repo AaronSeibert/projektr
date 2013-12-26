@@ -12,12 +12,11 @@ class UserMailer < ActionMailer::Base
   Rails.env.production?
     @url = 'http://projects.binaryitsystems.com'
   Rails.env.development?
-    @url = 'http://still-beach-8899.herokuapp.com'
+    @url = 'http://172.16.25.150:3000'
   Rails.env.staging?
     @url = 'http://still-beach-8899.herokuapp.com'
     
     @user = user
-    @url  = 'http://172.16.25.150:3000'
     mail(to: @user.email, subject: 'Welcome to My Awesome Site')
   end
   
