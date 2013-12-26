@@ -19,7 +19,7 @@ class RevisionsController < ApplicationController
 
   # GET /revisions/1/edit
   def edit
-    @project = Project.find(params[:project_id])
+    @project = Project.friendly.find(params[:project_id])
   end
 
   # POST /revisions
@@ -47,6 +47,12 @@ class RevisionsController < ApplicationController
     @project = @revision.project
     @revision.destroy
     redirect_to project_url(@project), notice: 'Revision was successfully removed.'
+  end
+  
+  def sendemail
+    @revision = Revision.find(params[:id])
+    ProjectMailer.delay.new_revision_email(@revision)
+    redirect_to project_url(@revision.project), notice: 'Email has been queued.'
   end
 
   private

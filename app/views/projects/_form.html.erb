@@ -1,0 +1,36 @@
+<%= form_for(@project) do |f| %>
+  <% if @project.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@project.errors.count, "error") %> prohibited this revision from being saved:</h2>
+
+      <ul>
+      <% @project.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <fieldset>
+    <legend>Project Information</legend>
+      <div class="form-group">
+        <%= f.label :name, :class => "col-lg-3 control-label" %>
+        <div class="col-lg-9">
+          <%= f.text_field :name, :class => "form-control" %>
+        </div>
+      </div>
+  </fieldset>
+  
+  <fieldset>
+    <legend>Project Users</legend>
+    <div class="checkbox col-lg-12">
+      <%= f.collection_check_boxes :user_ids, @project.client.users, :id, :full_name do |b|
+        b.label(class: "col-lg-2") { b.check_box() + b.text }
+      end %>
+    </div>
+  </fieldset>
+  
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

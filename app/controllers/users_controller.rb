@@ -1,9 +1,10 @@
 class UsersController < ApplicationController
+  load_and_authorize_resource
   
   before_filter :authenticate_user!
   
   def index
-    @users = User.all
+    @users = User.accessible_by(current_ability)
   end
 
   def show
@@ -20,11 +21,16 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-
-    if @user.save
-      redirect_to @user, notice: 'User was successfully created.'
-    else
-      render :action => 'new'
+    respond_to do |format|
+      if @user.save
+        UserMailer.delay.welcome_email(@user)
+        format.html { redirect_to users_url, :success => "User created successfully!"}
+        format.json { render action: 'show', status: :created, location: @user }
+      else
+        format.html { render action: 'new' }
+        format.js   { render action: 'new' }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -35,12 +41,15 @@ class UsersController < ApplicationController
     end
     
     @user = User.find(params[:id])
-
-    if @user.update_attributes(user_params)
-      sign_in(@user, :bypass => true) if @user == current_user
-      redirect_to @user, notice: 'User was successfully updated.'
-    else
-      render :action => 'edit'
+    respond_to do |format|
+      if @user.update(user_params)
+        #sign_in(@user, :bypass => true) if @user == current_user
+        format.html { redirect_to users_url, :success => "User has been updated" }
+      else
+        format.html { render action: 'edit' }
+        format.js   { render action: 'edit' }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -51,6 +60,7 @@ class UsersController < ApplicationController
   end
   
   private
+  
     # Use callbacks to share common setup or constraints between actions.
     def set_revision
       @revision = Revision.find(params[:id])
@@ -58,6 +68,6 @@ class UsersController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def user_params
-      params.require(:user).permit(:email, :password, :admin)
+      params.require(:user).permit(:email, :password, :password_confirmation, :admin, :superuser, :tenant_id, :client_id, :first_name, :last_name)
     end
 end

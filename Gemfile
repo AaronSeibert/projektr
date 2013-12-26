@@ -20,6 +20,15 @@ gem 'mini_magick'
 gem 'simple-navigation'
 gem 'bourbon'
 gem 'devise'
+gem 'font-awesome-sass'
+gem 'friendly_id', '~> 5.0.0'
+gem 'cancan'
+gem 'turbolinks'
+gem 'turbolinks-redirect'
+gem 'jquery-turbolinks'
+gem 'multimap'
+gem 'rest-client'
+gem 'delayed_job_active_record'
 
 # Gems used only for assets and not required
 # in production environments by default.

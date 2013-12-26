@@ -12,4 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery.turbolinks
+//= require turbolinks
+//= require turbolinks.redirect
 //= require_tree .

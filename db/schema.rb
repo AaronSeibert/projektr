@@ -11,13 +11,45 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130819150535) do
+ActiveRecord::Schema.define(version: 20131226165758) do
 
   create_table "clients", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "tenant_id"
   end
+
+  add_index "clients", ["tenant_id"], name: "index_clients_on_tenant_id"
+
+  create_table "delayed_jobs", force: true do |t|
+    t.integer  "priority",   default: 0, null: false
+    t.integer  "attempts",   default: 0, null: false
+    t.text     "handler",                null: false
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.string   "queue"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority"
+
+  create_table "friendly_id_slugs", force: true do |t|
+    t.string   "slug",                      null: false
+    t.integer  "sluggable_id",              null: false
+    t.string   "sluggable_type", limit: 50
+    t.string   "scope"
+    t.datetime "created_at"
+  end
+
+  add_index "friendly_id_slugs", ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true
+  add_index "friendly_id_slugs", ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
+  add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id"
+  add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
 
   create_table "projects", force: true do |t|
     t.string   "name"
@@ -25,9 +57,18 @@ ActiveRecord::Schema.define(version: 20130819150535) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "active"
+    t.string   "slug"
+    t.integer  "tenant_id"
   end
 
   add_index "projects", ["client_id"], name: "index_projects_on_client_id"
+  add_index "projects", ["slug"], name: "index_projects_on_slug", unique: true
+  add_index "projects", ["tenant_id"], name: "index_projects_on_tenant_id"
+
+  create_table "projects_users", id: false, force: true do |t|
+    t.integer "project_id"
+    t.integer "user_id"
+  end
 
   create_table "revisions", force: true do |t|
     t.text     "name"
@@ -44,6 +85,20 @@ ActiveRecord::Schema.define(version: 20130819150535) do
     t.string   "image"
   end
 
+  create_table "settings", force: true do |t|
+    t.integer  "tenant_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "settings", ["tenant_id"], name: "index_settings_on_tenant_id"
+
+  create_table "tenants", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
@@ -58,9 +113,16 @@ ActiveRecord::Schema.define(version: 20130819150535) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "admin"
+    t.integer  "tenant_id"
+    t.boolean  "superuser"
+    t.integer  "client_id"
+    t.string   "first_name"
+    t.string   "last_name"
   end
 
+  add_index "users", ["client_id"], name: "index_users_on_client_id"
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  add_index "users", ["tenant_id"], name: "index_users_on_tenant_id"
 
 end

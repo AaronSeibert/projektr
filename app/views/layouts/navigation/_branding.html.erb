@@ -1,0 +1,12 @@
+<a class="navbar-brand" href="/">
+<% if user_signed_in? %>
+  <% if current_user.tenant %>
+    <%= current_user.tenant.name %>
+  <% else %>
+    Project Manager
+  <% end %>
+<% else %>
+  Project Manager
+<% end %>
+</a>
+  

@@ -1,28 +1,87 @@
-$.rails.allowAction = (link) ->
-  return true unless link.attr('data-confirm')
-  $.rails.showConfirmDialog(link) # look bellow for implementations
-  false # always stops the action since code runs asynchronously
+# Create our function for detecting modal form button clicks
+bindModalForm = ->
+  $(".modal-form").click ->
+    href = $(@).attr "href"
+    $.get href, (data) ->
+      $("#modal-content").html data
+      
+fadeFlashMessages = ->
+  $(".alert").delay(2000).fadeOut(2000)
+  
+prettyPhotoBind = ->
+  $("a[data-lightbox]").prettyPhoto(
+    allow_resize: false
+    theme:        'dark_square'
+    social_tools: ''
+    show_title:   false
+  )
+    
+onLoadEvents = ->
+  fadeFlashMessages()
+  prettyPhotoBind()
+      
+$(document).on 'ready page:load', onLoadEvents
 
-$.rails.confirmed = (link) ->
-  link.removeAttr('data-confirm')
-  link.trigger('click.rails')
+# Handle ajax form errors
+$(document).on 'ajax:success', 'form[data-remote]', (data, status, xhr) ->
+  $("#modal-window").modal('hide')
+  
+$(document).on 'ajax:error', 'form[data-remote]', (xhr, data, status) ->
+  # do something with `data`, which is a JS object from your JSON response
+  console.log data
 
-$.rails.showConfirmDialog = (link) ->
-  message = link.attr 'data-confirm'
-  html = """
-         <div class="modal" id="confirmationDialog">
-           <div class="modal-header">
-             <a class="close" data-dismiss="modal">×</a>
-             <h3>#{message}</h3>
-           </div>
-           <div class="modal-body">
-             <p>Are you sure you want to delete?</p>
-           </div>
-           <div class="modal-footer">
-             <a data-dismiss="modal" class="btn">Cancel</a>
-             <a data-dismiss="modal" class="btn btn-primary confirm">OK</a>
-           </div>
-         </div>
-         """
-  $(html).modal()
-  $('#confirmationDialog .confirm').on 'click', -> $.rails.confirmed(link)
+$.rails.allowAction = (element) ->
+  # The title is something like "Are you sure?"
+  title = element.data('title')
+  message = element.data('message')
+  # If there's no title, there's no data-confirm attribute, 
+  # which means there's nothing to confirm
+  return true unless title
+  # Clone the clicked element (probably a delete link) so we can use it in the dialog box.
+  link = element.clone()
+    # We don't necessarily want the same styling as the original link/button.
+    .removeAttr('class')
+    # We don't want to pop up another confirmation (recursion)
+    .removeAttr('data-message')
+    .removeAttr('data-title')
+    # We want a button
+    .addClass('btn').addClass('btn-danger')
+    # Remove children
+    .html('Delete')
+    
+
+  # Create the modal box with the title
+  modal_html = """
+  <div class="modal fade" id="modal-confirmation">
+    <div class="modal-dialog">
+      <div class="modal-content">               
+        <div class="modal-header">
+          <a class="close" data-dismiss="modal">×</a>
+          <h3>#{title}</h3>
+        </div>
+        <div class="modal-body">
+          <p>#{message}</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  """
+  modal_html = $(modal_html)
+  # Add the new button to the modal box
+  modal_html.find('.modal-footer').append(link)
+  # Pop it up
+  modal_html.modal()
+  # Prevent the original link from working
+  return false
+  
+remove_fields = (link) ->
+  $(link).prev("input[type=hidden]").val "1"
+  $(link).closest(".fields").hide()
+  
+add_fields = (link, association, content) ->
+  new_id = new Date().getTime()
+  regexp = new RegExp("new_" + association, "g")
+  $(link).parent().before content.replace(regexp, new_id)

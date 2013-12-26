@@ -1,9 +1,10 @@
 class ProjectsController < ApplicationController
-  
+  load_and_authorize_resource :find_by => :slug
   before_filter :authenticate_user!, :except => [:show]
   
+  
   def index
-    @Projects = Project.all
+    @Projects = Project.accessible_by(current_ability)
   end
   
   def new
@@ -11,7 +12,7 @@ class ProjectsController < ApplicationController
   end
   
   def show
-    @project = Project.find(params[:id])
+    @project = Project.friendly.find(params[:id])
   end
   
   def create
@@ -24,8 +25,17 @@ class ProjectsController < ApplicationController
     end
   end
   
+  # PATCH/PUT /revisions/1
+  def update
+    if @project.update(project_params)
+      redirect_to @project, notice: 'Project was successfully updated.'
+    else
+      render action: 'edit'
+    end
+  end
+  
   private
     def project_params
-      params.require(:project).permit(:name, :client_id, :active)
+      params.require(:project).permit(:name, :client_id, :active, :user_ids => [])
     end
 end
