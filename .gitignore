@@ -17,4 +17,3 @@
 *.pyc
 *.pyo
 config/database.yml
-config/mailer.yml

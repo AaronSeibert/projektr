@@ -51,7 +51,7 @@ class RevisionsController < ApplicationController
   
   def sendemail
     @revision = Revision.find(params[:id])
-    ProjectMailer.delay.new_revision_email(@revision)
+    ProjectMailer.delay(:queue => 'email').new_revision_email(@revision)
     redirect_to project_url(@revision.project), notice: 'Email has been queued.'
   end
 

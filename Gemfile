@@ -29,6 +29,8 @@ gem 'jquery-turbolinks'
 gem 'multimap'
 gem 'rest-client'
 gem 'delayed_job_active_record'
+gem 'unicorn'
+gem 'clockwork'
 
 # Gems used only for assets and not required
 # in production environments by default.
