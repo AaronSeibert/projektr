@@ -3,6 +3,8 @@ class ProjectMailer < ActionMailer::Base
     default from: "noreply@automated.binaryitsystems.com"
   Rails.env.development?
     default from: "noreply@sandbox11314.mailgun.org"
+  Rails.env.staging?
+    default from: "noreply@sandbox11314.mailgun.org"
   
   
   
