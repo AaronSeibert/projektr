@@ -25,8 +25,17 @@ class ProjectsController < ApplicationController
     end
   end
   
+  # PATCH/PUT /revisions/1
+  def update
+    if @project.update(project_params)
+      redirect_to @project, notice: 'Project was successfully updated.'
+    else
+      render action: 'edit'
+    end
+  end
+  
   private
     def project_params
-      params.require(:project).permit(:name, :client_id, :active)
+      params.require(:project).permit(:name, :client_id, :active, :user_ids => [])
     end
 end

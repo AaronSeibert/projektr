@@ -23,7 +23,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     respond_to do |format|
       if @user.save
-        UserMailer.welcome_email(@user).deliver
+        UserMailer.delay.welcome_email(@user)
         format.html { redirect_to users_url, :success => "User created successfully!"}
         format.json { render action: 'show', status: :created, location: @user }
       else

@@ -26,6 +26,9 @@ gem 'cancan'
 gem 'turbolinks'
 gem 'turbolinks-redirect'
 gem 'jquery-turbolinks'
+gem 'multimap'
+gem 'rest-client'
+gem 'delayed_job_active_record'
 
 # Gems used only for assets and not required
 # in production environments by default.

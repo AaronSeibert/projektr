@@ -11,7 +11,11 @@ ProjectManager::Application.routes.draw do
   end
   resources :screenshots, :except => [:index]
 
-  resources :revisions, :except => [:index, :show]
+  resources :revisions, :except => [:index, :show] do
+    member do
+      get 'sendemail'
+    end
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

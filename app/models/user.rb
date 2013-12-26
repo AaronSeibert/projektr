@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
          
   belongs_to :tenant
   belongs_to :client
+  has_and_belongs_to_many :projects
   
   def is_admin?
     if self.admin || self.superuser

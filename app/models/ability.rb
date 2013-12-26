@@ -16,21 +16,21 @@ class Ability
     # If you pass :manage it will apply to every action. Other common actions
     # here are :read, :create, :update and :destroy.
     #
-    if user.is_superuser?
-      can :manage, :all
-    end
     
-    if user.is_admin?
-      can :manage, [Client, Project, User, Setting], :tenant_id => user.tenant.id
-      can [:update, :read], Tenant, :id => user.tenant.id
-    end
-    
-    if !user.is_superuser? && !user.is_admin?
-      can :read, Project, :active => true, :client_id => user.client.id
-      cannot :destroy, :all
-      can :read, User, :id => user.id
-      can :update, User, :id => user.id
-    end
-    
+    unless user
+      can :read, Project, :active => true
+    else
+      if user.is_superuser?
+        can :manage, :all
+      elsif user.is_admin?
+        can :manage, [Client, Project, User, Setting], :tenant_id => user.tenant.id
+        can [:update, :read], Tenant, :id => user.tenant.id
+      elsif !user.is_superuser? && !user.is_admin?
+        can :read, Project, :active => true, :client_id => user.client.id
+        cannot :destroy, :all
+        can :read, User, :id => user.id
+        can :update, User, :id => user.id
+      end
+    end    
   end
 end

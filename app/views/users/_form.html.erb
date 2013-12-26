@@ -55,13 +55,6 @@
     <fieldset>
       <legend>Associations</legend>
       
-      <div class="form-group">
-        <%= f.label :client_id, 'Client', :class => "col-lg-3 control-label"  %>
-        <div class="col-lg-9">
-          <%= f.collection_select :client_id, Client.accessible_by(current_ability), :id, :name, {:include_blank => 'None'}, {:class => "form-control"} %>
-        </div>
-      </div>
-    
       <% if current_user.is_superuser? %>
         <div class="form-group">
           <%= f.label :tenant_id, 'Tenant', :class => "col-lg-3 control-label" %>
@@ -70,6 +63,15 @@
           </div>
         </div>
       <% end %>
+      
+      <div class="form-group">
+        <%= f.label :client_id, 'Client', :class => "col-lg-3 control-label"  %>
+        <div class="col-lg-9">
+          <%= f.collection_select :client_id, Client.accessible_by(current_ability), :id, :name, {:include_blank => 'None'}, {:class => "form-control"} %>
+        </div>
+      </div>
+    
+      
     </fieldset>
   <% end %> 
   
