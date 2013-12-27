@@ -1,11 +1,7 @@
-Welcome to <%= @user.tenant.name %> 
-===============================================
+Hi %recipient.first_name%
 
-Hi <%= @user.first_name %>!
- 
-An account has been created for you by <%= @user.tenant.name %>,
-your username is: <%= @user.email %>.
- 
-To login to the site, just follow this link: <%= @url %>.
- 
+A new round of revisions has been uploaded to your project, <%= @project.name %>.
+
+<%= link_to "View your project online", project_url(@project) %>
+
 Have a great day!

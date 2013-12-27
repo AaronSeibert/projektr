@@ -8,16 +8,15 @@ class UserMailer < ActionMailer::Base
   
   
   def welcome_email(user)
-    
-  Rails.env.production?
-    @url = 'http://projects.binaryitsystems.com'
-  Rails.env.development?
-    @url = 'http://172.16.25.150:3000'
-  Rails.env.staging?
-    @url = 'http://still-beach-8899.herokuapp.com'
-    
-    @user = user
-    mail(to: @user.email, subject: 'New Account Created')
+    Rails.env.production?
+      @url = 'http://projects.binaryitsystems.com'
+    Rails.env.development?
+      @url = 'http://172.16.25.150:3000'
+    Rails.env.staging?
+      @url = 'http://still-beach-8899.herokuapp.com'
+      
+      @user = user
+      mail(to: @user.email, subject: 'New Account Created')
   end
   
  

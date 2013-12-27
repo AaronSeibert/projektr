@@ -1,19 +1,11 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
-  </head>
-  <body>
-    <p>
-      Hi <%= @user.first_name %>!
-    </p>
-    
-    <p>
-      A new round of revisions has been uploaded to your project, <%= @project.name %>.
-    </p>
-    <p>
-      <%= link_to "View your project online", project_url(@project) %>
-    </p>
-    <p>Have a great day!</p>
-  </body>
-</html>
+<p>
+  Hi %recipient.first_name%
+</p>
+
+<p>
+  A new round of revisions has been uploaded to your project, <%= @project.name %>.
+</p>
+<p>
+  <%= link_to "View your project online", project_url(@project) %>
+</p>
+<p>Have a great day!</p>
