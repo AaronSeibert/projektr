@@ -9,6 +9,8 @@ class User < ActiveRecord::Base
   belongs_to :client
   has_and_belongs_to_many :projects
   
+  after_create :send_welcome_email
+  
   def is_admin?
     if self.admin || self.superuser
       true
@@ -32,5 +34,10 @@ class User < ActiveRecord::Base
       false
     end
   end
+  
+  private
+    def send_welcome_email
+      UserMailer.delay(:queue => "email").welcome_email(self)
+    end
   
 end

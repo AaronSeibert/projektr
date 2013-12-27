@@ -17,7 +17,7 @@ class UserMailer < ActionMailer::Base
     @url = 'http://still-beach-8899.herokuapp.com'
     
     @user = user
-    mail(to: @user.email, subject: 'Welcome to My Awesome Site')
+    mail(to: @user.email, subject: 'New Account Created')
   end
   
  

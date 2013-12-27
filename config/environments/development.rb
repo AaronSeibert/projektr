@@ -48,15 +48,4 @@ ProjectManager::Application.configure do
   
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
-  config.action_mailer.default_url_options = { :host => "localhost:3000" }
-  
-  config.action_mailer.smtp_settings = {
-      address:              "smtp.mailgun.org",
-      port:                 587,
-      domain:               "sandbox11314.mailgun.org",
-      user_name:            ENV['PM_DEV_SMTP_USER'],
-      password:             ENV['PM_DEV_SMTP_PASS'],
-      authentication:       "plain",
-      enable_starttls_auto: true
-  }
 end

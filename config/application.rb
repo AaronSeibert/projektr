@@ -65,5 +65,11 @@ module ProjectManager
     
     # The name to display in the nav bar
     config.site_name = "Project Manager"
+    
+    config.action_mailer.delivery_method = :mailgun
+    config.action_mailer.mailgun_settings = {
+          api_key: ENV['PM_MAILGUN_API_KEY'],
+          domain: ENV['PM_MAILGUN_DOMAIN']
+    }
   end
 end
