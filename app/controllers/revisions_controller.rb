@@ -19,7 +19,7 @@ class RevisionsController < ApplicationController
 
   # GET /revisions/1/edit
   def edit
-    @project = Project.friendly.find(params[:project_id])
+    @project = Project.find(params[:project_id])
   end
 
   # POST /revisions
