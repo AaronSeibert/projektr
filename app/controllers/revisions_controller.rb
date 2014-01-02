@@ -14,7 +14,7 @@ class RevisionsController < ApplicationController
   # GET /revisions/new
   def new
     @revision = Revision.new
-    @project = Project.find(params[:project_id])
+    @project = Project.friendly.find(params[:project_id])
   end
 
   # GET /revisions/1/edit

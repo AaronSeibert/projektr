@@ -1,9 +1,17 @@
 <p>
     <h1><%= @project.name %> - <%= @project.client.name %></h1>
-    <p><small>
-      <%= @project.users.collect{|u| u.full_name}.to_sentence %>
-    </small></p>
-    <p><%= link_to "Edit Project Details", edit_project_path(@project)%></p>
+    
+    <% if user_signed_in? %>
+      <p><small>
+        <%= @project.users.collect{|u| u.full_name}.to_sentence %>
+      </small></p>
+    <% end %>
+    
+    <% if user_signed_in? %>
+      <% if current_user.is_admin? %>
+        <p><%= link_to "Edit Project Details", edit_project_path(@project)%></p>
+      <% end %>
+    <% end %>
     
     <div class="revisionset">
         <header>
