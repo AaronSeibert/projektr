@@ -11,10 +11,10 @@ group :production, :staging do
   gem 'execjs'
   gem 'therubyracer'
   gem 'pg'
+  gem 'newrelic_rpm'
 end
 
 group :production do
-  gem 'newrelic_rpm'
 end
 
 group :development do
