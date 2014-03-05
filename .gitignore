@@ -18,4 +18,3 @@
 *.pyo
 config/database.yml
 public/uploads
-config/initializers/carrierwave.rb
