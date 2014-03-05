@@ -15,7 +15,7 @@
       <tr>
         <td><%= tenant.name %></td>
         <td><%= link_to 'Show', tenant %></td>
-        <td><%= link_to 'Edit', edit_tenant_path(tenant) %></td>
+        <td><%= link_to 'Edit', edit_tenant_path(tenant, :format => :js), :class=>"modal-form", :remote => true, data:{ toggle: "modal", target: "#modal-window" } %></td>
         <td><%= link_to 'Destroy', tenant, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
@@ -24,4 +24,4 @@
 
 <br>
 
-<%= link_to 'New Tenant', new_tenant_path %>
+<%= link_to 'New Tenant', new_tenant_path(:format => :js), :class=>"modal-form", :remote => true, data:{ toggle: "modal", target: "#modal-window" } %>
