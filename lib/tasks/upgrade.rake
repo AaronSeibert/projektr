@@ -1,5 +1,6 @@
 namespace :upgrade do
-  desc "TODO"
+  
+  desc "Migrates images from file storage to S3"
   task migrate_screenshots: :environment do
     Screenshot.all.each do |s|
       if s.image?
@@ -21,6 +22,13 @@ namespace :upgrade do
       else
         puts "================================= ATTACHMENT NOT FOUND: ID: #{s.id}"
       end
+    end
+  end
+  
+  desc "Reprocesses images, used when adding a size for something"
+  task reprocess_images: :environment do
+    Screenshot.all.each do |s|
+      s.image.recreate_versions!
     end
   end
 end
