@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
 
-ruby '2.0.0'
+ruby '2.1.1'
 
-gem 'rails', '4.0.0'
+gem 'rails', '4.0.3'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -12,6 +12,10 @@ group :production, :staging do
   gem 'therubyracer'
   gem 'pg'
   gem 'newrelic_rpm'
+end
+
+group :staging do
+  gem 'rails_12factor'
 end
 
 group :production do
@@ -37,7 +41,6 @@ gem 'rest-client'
 gem 'delayed_job_active_record'
 gem 'unicorn'
 gem 'clockwork'
-gem 'rails_12factor'
 gem 'mailgun_rails'
 
 # Gems used only for assets and not required
@@ -59,9 +62,6 @@ gem 'jquery-rails'
 
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'
-
-# Use unicorn as the app server
-# gem 'unicorn'
 
 # Deploy with Capistrano
 # gem 'capistrano'
