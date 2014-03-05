@@ -1,22 +1,27 @@
-<h1>Listing tenants</h1>
+<h1>Tenants</h1>
 
-<table>
+<table class="table table-striped">
   <thead>
     <tr>
+      <th></th>
       <th>Name</th>
-      <th></th>
-      <th></th>
-      <th></th>
+      <th>Clients</th>
+      <th>Users</th>
+      <th>Projects</th>
     </tr>
   </thead>
 
   <tbody>
     <% @tenants.each do |tenant| %>
       <tr>
+        <td>
+          <%= link_to '', edit_tenant_path(tenant, :format => :js), :class=>"fa fa-edit text-primary modal-form", :remote => true, data:{ toggle: "modal", target: "#modal-window" } %>
+          <%= link_to '', tenant, method: :delete, :class=>"fa fa-times text-danger", data: { title: "Delete Tenant", message: "Are you sure you want to delete " + tenant.name + " ?"} %>
+        </td>
         <td><%= tenant.name %></td>
-        <td><%= link_to 'Show', tenant %></td>
-        <td><%= link_to 'Edit', edit_tenant_path(tenant, :format => :js), :class=>"modal-form", :remote => true, data:{ toggle: "modal", target: "#modal-window" } %></td>
-        <td><%= link_to 'Destroy', tenant, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= tenant.clients.count %></td>
+        <td><%= tenant.users.count %></td>
+        <td><%= tenant.projects.count %></td>
       </tr>
     <% end %>
   </tbody>
