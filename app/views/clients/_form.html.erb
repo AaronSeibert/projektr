@@ -1,0 +1,18 @@
+<%= render partial: 'global/forms/modal_header', locals: {:title => "Add New Client"} %>
+<%= form_for(@client, :remote => true, :html => {:class => "form-horizontal", :role => "form", 'data-update-target' => 'update-container' }) do |f| %> 
+
+<div class="modal-body update-container">
+  <div id="form-errors">
+    <%= modal_flash(@client, "client") %>
+  </div>  
+  <%= render "global/flash" %>
+  
+  <div class="form-group">
+    <%= f.label :name, :class => "col-lg-3 control-label" %>
+    <div class="col-lg-9">
+      <%= f.text_field :name, :class => "form-control", :autofocus => true %>
+    </div>
+  </div>
+
+<%= render partial: "global/forms/modal_footer", locals: { :f => f } %>
+<% end %>
