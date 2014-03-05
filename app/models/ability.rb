@@ -21,17 +21,26 @@ class Ability
       can :read, Project, :active => true
     else
       if user.is_superuser?
+        # God mode. Nuff said.
         can :manage, :all
+        
       elsif user.is_admin?
+        # Admins can manage most items belonging to their tenant account
         can :manage, [Client, Project, User, Setting], :tenant_id => user.tenant.id
+        
+        # They can also update and read their own tenant account
         can [:update, :read], Tenant, :id => user.tenant.id
+        
+        # But they can't delete any tenant accounts, including their own
         cannot :destroy, Tenant
+        
+        # Prevent user from deleting their own record
         cannot :destroy, User, :id => user.id
+        
       elsif !user.is_superuser? && !user.is_admin?
         can :read, Project, :active => true, :client_id => user.client.id
+        can [:update, :read], User, :id => user.id
         cannot :destroy, :all
-        can :read, User, :id => user.id
-        can :update, User, :id => user.id
       end
     end    
   end

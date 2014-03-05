@@ -1,4 +1,6 @@
 class TenantsController < ApplicationController
+  load_and_authorize_resource
+  before_filter :authenticate_user!
   before_action :set_tenant, only: [:show, :edit, :update, :destroy]
 
   # GET /tenants
@@ -8,6 +10,7 @@ class TenantsController < ApplicationController
 
   # GET /tenants/1
   def show
+
   end
 
   # GET /tenants/new
