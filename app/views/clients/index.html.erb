@@ -1,6 +1,6 @@
 <p>
     <h1>Clients</h1>
-    <%= link_to "Add new client", new_client_path %>
+    <%= link_to 'Add Client', new_client_path(:format => :js), :class=>"modal-form", :remote => true, data:{ toggle: "modal", target: "#modal-window" } %>
 </p>
 
 <table class="table table-striped">
