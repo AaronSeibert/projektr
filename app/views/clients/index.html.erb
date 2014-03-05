@@ -6,13 +6,15 @@
 <table class="table table-striped">
     <thead>
         <th>Name</th>
-        <th># of Projects</th>
+        <th>Projects</th>
+        <th>Users</th>
     </thead>
     <tbody>
     <% @Clients.each do |client| %>
         <tr>
             <td><%= link_to client.name, client_path(client) %></td>
             <td><%= client.projects.count %></td>
+            <td><%= client.users.count %></td>
         </tr>
     <% end %>
     </tbody>
