@@ -23,6 +23,7 @@ class Ability
       if user.is_superuser?
         can :manage, :all
       elsif user.is_admin?
+        cannot :destroy, :tenant
         can :manage, [Client, Project, User, Setting], :tenant_id => user.tenant.id
         can [:update, :read], Tenant, :id => user.tenant.id
       elsif !user.is_superuser? && !user.is_admin?

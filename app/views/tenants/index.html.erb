@@ -16,7 +16,9 @@
       <tr>
         <td>
           <%= link_to '', edit_tenant_path(tenant, :format => :js), :class=>"fa fa-edit text-primary modal-form", :remote => true, data:{ toggle: "modal", target: "#modal-window" } %>
-          <%= link_to '', tenant, method: :delete, :class=>"fa fa-times text-danger", data: { title: "Delete Tenant", message: "Are you sure you want to delete " + tenant.name + " ?"} %>
+          <% if current_user.is_superuser? %>
+            <%= link_to '', tenant, method: :delete, :class=>"fa fa-times text-danger", data: { title: "Delete Tenant", message: "Are you sure you want to delete " + tenant.name + " ?"} %>
+          <% end %>
         </td>
         <td><%= tenant.name %></td>
         <td><%= tenant.clients.count %></td>
