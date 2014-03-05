@@ -17,7 +17,7 @@
         <header>
             <h2>Revision List</h2>
             <% if user_signed_in? %>
-                <h4><%= link_to "Add Revision Set", new_revision_path(:project_id => @project.id) %></h4>
+                <h4><%= link_to "Add Revision Set", new_revision_path(:project_id => @project.id, :format => :js), :class=>"modal-form", :remote => true, data:{ toggle: "modal", target: "#modal-window" } %></h4>
             <% end %>
         </header>
         <% @project.revisions.reverse_each do |revision| %>
