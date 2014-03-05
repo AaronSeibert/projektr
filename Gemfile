@@ -42,6 +42,7 @@ gem 'delayed_job_active_record'
 gem 'unicorn'
 gem 'clockwork'
 gem 'mailgun_rails'
+gem "fog", "~> 1.3.1"
 
 # Gems used only for assets and not required
 # in production environments by default.
