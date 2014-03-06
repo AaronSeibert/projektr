@@ -17,6 +17,7 @@ class ClientsController < ApplicationController
   
   def create
     @client = Client.new(client_params)
+    @client.tenant_id = current_user.tenant_id
     
     respond_to do |format|
       if @client.save
