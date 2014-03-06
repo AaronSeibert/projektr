@@ -17,9 +17,10 @@ class ProjectsController < ApplicationController
   
   def create
     @project = Project.new(project_params)
+    @project.tenant_id = current_user.tenant_id
     
     if @project.save
-      redirect_to @project
+      redirect_to project_url(@project.slug), notice: 'Project was successfully created.'
     else
       render 'new'
     end
@@ -28,7 +29,7 @@ class ProjectsController < ApplicationController
   # PATCH/PUT /revisions/1
   def update
     if @project.update(project_params)
-      redirect_to @project, notice: 'Project was successfully updated.'
+      redirect_to project_url(@project.slug), notice: 'Project was successfully updated.'
     else
       render action: 'edit'
     end

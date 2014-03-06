@@ -15,7 +15,7 @@
         <tr>
             <td><%= project.id %></td>
             <td><%= link_to project.client.name, client_path(project.client)%></td>
-            <td><%= link_to project.name, project_path(project) %></td>
+            <td><%= link_to project.name, project_path(project.slug) %></td>
             <td><%= convert_true_false(project.active) %></td>
         </tr>
     <% end %>
