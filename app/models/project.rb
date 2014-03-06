@@ -13,11 +13,12 @@ class Project < ActiveRecord::Base
   validates :client, presence: true
   
   def slug_candidates
+    Rails.logger.debug "Project: #{self.inspect}"
     [
-      [self.client.name, :name],
-      [self.client.name, :name, Time.now.year],
-      [self.client.name, :name, Time.now.year, Time.now.month],
-      [self.client.name, :name, Time.now.year, Time.now.month, Time.now.day],
+      [client.name, :name],
+      [client.name, :name, Time.now.year],
+      [client.name, :name, Time.now.year, Time.now.month],
+      [client.name, :name, Time.now.year, Time.now.month, Time.now.day],
     ]
   end
   

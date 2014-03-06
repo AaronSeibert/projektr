@@ -2,6 +2,8 @@ class ProjectsController < ApplicationController
   load_and_authorize_resource :find_by => :slug
   before_filter :authenticate_user!, :except => [:show]
   
+  #before_validation :set_client, on: :create, prepend: true
+  
   
   def index
     @Projects = Project.accessible_by(current_ability)
@@ -9,6 +11,9 @@ class ProjectsController < ApplicationController
   
   def new
     @project = Project.new
+    if params[:client_id]
+      @project.client = Client.find(params[:client_id])
+    end
   end
   
   def show
@@ -38,5 +43,9 @@ class ProjectsController < ApplicationController
   private
     def project_params
       params.require(:project).permit(:name, :client_id, :active, :user_ids => [])
+    end
+    
+    def set_client
+      self.client = Client.find(params[:client_id])
     end
 end

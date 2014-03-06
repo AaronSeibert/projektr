@@ -5,7 +5,7 @@
 <p id="notice"><%= notice %></p>
 
 <table class="table table-striped">
-    <caption><strong>Project List</strong> - <%= link_to "Add new project", new_project_path(:client_id => @client) %></caption>
+    <caption><strong>Project List</strong> - <%= link_to "Add new project", new_project_path(:client_id => @client, :format => :js), :class=>"modal-form", :remote => true, data:{ toggle: "modal", target: "#modal-window" } %></caption>
     <thead>
         <th>Name</th>
         <th>Active</th>

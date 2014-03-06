@@ -1,36 +1,46 @@
-<%= form_for(@project) do |f| %>
-  <% if @project.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@project.errors.count, "error") %> prohibited this revision from being saved:</h2>
+<%= render partial: 'global/forms/modal_header', locals: {:title => "Add New Revision Set"} %>
+<%= form_for(@project, :remote => true, :html => {:class => "form-horizontal", :role => "form", 'data-update-target' => 'update-container' }) do |f| %> 
 
-      <ul>
-      <% @project.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+<div class="modal-body update-container">
+  <div id="form-errors">
+    <%= modal_flash(@project, "project") %>
+  </div>  
+  <%= render "global/flash" %>
+  
+  <div class="form-group">  
+    <%= f.label :name, :class => "col-lg-3 control-label" %>
+    <div class="col-lg-9">
+      <%= f.text_field :name, :class => "form-control", :autofocus => true %>
     </div>
-  <% end %>
+  </div>
   
-  <fieldset>
-    <legend>Project Information</legend>
-      <div class="form-group">
-        <%= f.label :name, :class => "col-lg-3 control-label" %>
-        <div class="col-lg-9">
-          <%= f.text_field :name, :class => "form-control" %>
-        </div>
-      </div>
-  </fieldset>
+  <div class="form-group">
+    <%= f.label :client_id, 'Client', :class => "col-lg-3 control-label" %>
+    <div class="col-lg-9">
+      <%= f.collection_select :client_id, Client.accessible_by(current_ability), :id, :name, {}, {:class => "form-control", :disabled => true} %>
+    </div>
+  </div>
   
+<div class="col-lg-12">
   <fieldset>
-    <legend>Project Users</legend>
+    <legend>Client Users</legend>
     <div class="checkbox col-lg-12">
       <%= f.collection_check_boxes :user_ids, @project.client.users, :id, :full_name do |b|
-        b.label(class: "col-lg-2") { b.check_box() + b.text }
+        b.label(class: "col-lg-4") { b.check_box() + b.text }
       end %>
     </div>
   </fieldset>
+</div>
+<div class="col-lg-12">
+  <fieldset>
+    <legend>Internal Users</legend>
+    <div class="checkbox col-lg-12">
+      <%= f.collection_check_boxes :user_ids, current_user.tenant.users, :id, :full_name do |b|
+        b.label(class: "col-lg-4") { b.check_box() + b.text }
+      end %>
+    </div>
+  </fieldset>
+</div>
   
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+<%= render partial: "global/forms/modal_footer", locals: { :f => f } %>
 <% end %>
