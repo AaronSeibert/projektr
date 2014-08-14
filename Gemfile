@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.1.1'
+ruby '2.1.2'
 
 gem 'rails', '4.0.3'
 
@@ -8,8 +8,6 @@ gem 'rails', '4.0.3'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 group :production, :staging do
-  gem 'execjs'
-  gem 'therubyracer'
   gem 'pg'
   gem 'newrelic_rpm'
 end
@@ -25,6 +23,8 @@ group :development do
   gem 'sqlite3'
 end
 
+gem 'execjs'
+gem 'therubyracer'
 gem 'carrierwave'
 gem 'mini_magick'
 gem 'simple-navigation'
@@ -42,7 +42,8 @@ gem 'delayed_job_active_record'
 gem 'unicorn'
 gem 'clockwork'
 gem 'mailgun_rails'
-gem "fog", "~> 1.3.1"
+gem 'fog', '~> 1.22.0'
+gem 'foreman'
 
 # Gems used only for assets and not required
 # in production environments by default.

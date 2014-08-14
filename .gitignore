@@ -16,5 +16,6 @@
 *.class
 *.pyc
 *.pyo
+.env
 config/database.yml
 public/uploads
