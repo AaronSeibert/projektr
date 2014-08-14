@@ -25,7 +25,7 @@ class ScreenshotsController < ApplicationController
     @screenshot = Screenshot.new(screenshot_params)
 
     if @screenshot.save
-      redirect_to @screenshot.revision.project, notice: 'Screenshot was successfully added.'
+      redirect_to project_path(@screenshot.revision.project.slug), notice: 'Screenshot was successfully added.'
     else
       render action: 'new'
     end
@@ -34,7 +34,7 @@ class ScreenshotsController < ApplicationController
   # PATCH/PUT /screenshots/1
   def update
     if @screenshot.update(screenshot_params)
-      redirect_to @screenshot.revision.project, notice: 'Screenshot was successfully updated.'
+      redirect_to project_path(@screenshot.revision.project.slug), notice: 'Screenshot was successfully updated.'
     else
       render action: 'edit'
     end
@@ -44,7 +44,7 @@ class ScreenshotsController < ApplicationController
   def destroy
     @project = @screenshot.revision.project
     @screenshot.destroy
-    redirect_to @project, notice: 'Screenshot was successfully deleted.'
+    redirect_to project_path(@project.slug), notice: 'Screenshot was successfully deleted.'
   end
 
   private

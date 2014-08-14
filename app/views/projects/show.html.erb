@@ -37,7 +37,7 @@
                     <% revision.screenshots.each do |screenshot| %>
                         <div class="screenshot col-lg-2">
                             <h5><%= screenshot.name %></h5>
-                            <%= link_to image_tag(screenshot.image_url(:thumb).to_s), screenshot.image_url(:modal), {'data-lightbox' => "screenshot-" + screenshot.id.to_s } %>
+                            <%= link_to image_tag(screenshot.image_url(:thumb).to_s, :class=> "screenshot-thumb"), screenshot.image_url(:modal), {'data-lightbox' => "screenshot-" + screenshot.id.to_s } %>
                         </div>
                     <% end %>
                 </div>

@@ -44,6 +44,7 @@ gem 'clockwork'
 gem 'mailgun_rails'
 gem 'fog', '~> 1.22.0'
 gem 'foreman'
+gem 'carrierwave_backgrounder'
 
 # Gems used only for assets and not required
 # in production environments by default.
