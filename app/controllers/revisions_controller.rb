@@ -27,7 +27,7 @@ class RevisionsController < ApplicationController
     @revision = Revision.new(revision_params)
 
     if @revision.save
-      redirect_to @revision.project, notice: 'Revision was successfully created.'
+      redirect_to project_path(@revision.project.slug), notice: 'Revision was successfully created.'
     else
       render action: 'new'
     end
@@ -36,7 +36,7 @@ class RevisionsController < ApplicationController
   # PATCH/PUT /revisions/1
   def update
     if @revision.update(revision_params)
-      redirect_to @revision.project, notice: 'Revision was successfully updated.'
+      redirect_to project_path(@revision.project.slug), notice: 'Revision was successfully updated.'
     else
       render action: 'edit'
     end
@@ -46,7 +46,7 @@ class RevisionsController < ApplicationController
   def destroy
     @project = @revision.project
     @revision.destroy
-    redirect_to project_url(@project), notice: 'Revision was successfully removed.'
+    redirect_to project_url(@project.slug), notice: 'Revision was successfully removed.'
   end
   
   def sendemail
