@@ -41,7 +41,9 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     respond_to do |format|
       if @user.update(user_params)
-        #sign_in(@user, :bypass => true) if @user == current_user
+        if current_user.id == @user.id
+	  sign_in(@user, :bypass => true)
+	end
         format.html { redirect_to users_url, :success => "User has been updated" }
       else
         format.html { render action: 'edit' }
