@@ -1,12 +1,6 @@
 class ProjectMailer < ActionMailer::Base
-  Rails.env.production?
-    default from: "noreply@automated.binaryitsystems.com"
-  Rails.env.development?
-    default from: "noreply@sandbox11314.mailgun.org"
-  Rails.env.staging?
-    default from: "noreply@sandbox11314.mailgun.org"
   
-  
+  default from: ENV["MAIL_FROM"]
   
   def project_link_email(project,user)
     @project = project

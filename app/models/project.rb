@@ -1,7 +1,7 @@
 class Project < ActiveRecord::Base
 
   extend FriendlyId
-  friendly_id :slug_candidates, :use => [:slugged]
+  friendly_id :slug_candidates, :use => :slugged
   
   belongs_to :client
   belongs_to :tenant
@@ -15,6 +15,7 @@ class Project < ActiveRecord::Base
   def slug_candidates
     Rails.logger.debug "Project: #{self.inspect}"
     [
+      :name,
       [client.name, :name],
       [client.name, :name, Time.now.year],
       [client.name, :name, Time.now.year, Time.now.month],
