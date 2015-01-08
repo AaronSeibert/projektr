@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
 
-ruby '2.1.2'
+ruby '2.2.0'
 
-gem 'rails', '4.0.3'
+gem 'rails', '4.2.0'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -31,18 +31,18 @@ gem 'simple-navigation'
 gem 'bourbon'
 gem 'devise'
 gem 'font-awesome-sass'
-gem 'friendly_id', '~> 5.0.0'
+gem 'friendly_id', '~> 5.1.0.beta.1'
 gem 'cancan'
 gem 'turbolinks'
 gem 'turbolinks-redirect'
 gem 'jquery-turbolinks'
-gem 'multimap'
+#gem 'multimap'
 gem 'rest-client'
 gem 'delayed_job_active_record'
 gem 'unicorn'
 gem 'clockwork'
 gem 'mailgun_rails'
-gem 'fog', '~> 1.22.0'
+gem 'fog', '~> 1.26.0'
 gem 'foreman'
 gem 'carrierwave_backgrounder'
 

@@ -13,7 +13,7 @@
 
 ActiveRecord::Schema.define(version: 20140814015729) do
 
-  create_table "clients", force: true do |t|
+  create_table "clients", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 20140814015729) do
 
   add_index "clients", ["tenant_id"], name: "index_clients_on_tenant_id"
 
-  create_table "delayed_jobs", force: true do |t|
+  create_table "delayed_jobs", force: :cascade do |t|
     t.integer  "priority",   default: 0, null: false
     t.integer  "attempts",   default: 0, null: false
     t.text     "handler",                null: false
@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(version: 20140814015729) do
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority"
 
-  create_table "friendly_id_slugs", force: true do |t|
+  create_table "friendly_id_slugs", force: :cascade do |t|
     t.string   "slug",                      null: false
     t.integer  "sluggable_id",              null: false
     t.string   "sluggable_type", limit: 50
@@ -51,7 +51,7 @@ ActiveRecord::Schema.define(version: 20140814015729) do
   add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id"
   add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
 
-  create_table "projects", force: true do |t|
+  create_table "projects", force: :cascade do |t|
     t.string   "name"
     t.integer  "client_id"
     t.datetime "created_at"
@@ -65,19 +65,19 @@ ActiveRecord::Schema.define(version: 20140814015729) do
   add_index "projects", ["slug"], name: "index_projects_on_slug", unique: true
   add_index "projects", ["tenant_id"], name: "index_projects_on_tenant_id"
 
-  create_table "projects_users", id: false, force: true do |t|
+  create_table "projects_users", id: false, force: :cascade do |t|
     t.integer "project_id"
     t.integer "user_id"
   end
 
-  create_table "revisions", force: true do |t|
+  create_table "revisions", force: :cascade do |t|
     t.text     "name"
     t.integer  "project_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "screenshots", force: true do |t|
+  create_table "screenshots", force: :cascade do |t|
     t.string   "name",        null: false
     t.integer  "revision_id"
     t.datetime "created_at"
@@ -86,7 +86,7 @@ ActiveRecord::Schema.define(version: 20140814015729) do
     t.string   "image_tmp"
   end
 
-  create_table "settings", force: true do |t|
+  create_table "settings", force: :cascade do |t|
     t.integer  "tenant_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -94,13 +94,13 @@ ActiveRecord::Schema.define(version: 20140814015729) do
 
   add_index "settings", ["tenant_id"], name: "index_settings_on_tenant_id"
 
-  create_table "tenants", force: true do |t|
+  create_table "tenants", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "users", force: true do |t|
+  create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"

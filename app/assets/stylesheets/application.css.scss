@@ -9,7 +9,6 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
- *= require font-awesome
  */
 
 @import "bourbon";
@@ -19,6 +18,8 @@
 @import "revisions";
 @import "screenshots";
 @import "prettyPhoto";
+@import "font-awesome-sprockets";
+@import "font-awesome";
 
 
 .float-left, .fl {

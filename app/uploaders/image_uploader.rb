@@ -9,7 +9,6 @@ class ImageUploader < CarrierWave::Uploader::Base
    
   # Choose what kind of storage to use for this uploader:
   storage :fog
-  # storage :fog
   
   def default_url
     ActionController::Base.helpers.asset_path("fallback/" + [version_name, "processing.gif"].compact.join('_'))
