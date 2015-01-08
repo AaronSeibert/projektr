@@ -9,7 +9,7 @@
     
     <% if user_signed_in? %>
       <% if current_user.is_admin? %>
-        <p><%= link_to "Edit Project Details", edit_project_path(@project.slug)%></p>
+	      <p><%= link_to "Edit Project Details", edit_project_path(@project.slug, :format => :js), :class=>"modal-form", :remote => true, data:{ toggle: "modal", target: "#modal-window" }%></p>
       <% end %>
     <% end %>
     
