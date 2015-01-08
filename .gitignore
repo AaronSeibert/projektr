@@ -19,3 +19,6 @@
 .env
 config/database.yml
 public/uploads
+
+# Ignore vim swp files
+*.swp
