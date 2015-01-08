@@ -1,5 +1,5 @@
 <% if user_signed_in? %>
-  <li><%= link_to("Welcome, " + " " + current_user.full_name, current_user) %></li>
+	<li><%= link_to(current_user.full_name, edit_user_path(current_user, :format => :js), :class=>"modal-form", :remote => true, data:{ toggle: "modal", target: "#modal-window" }) %></li>
   <li>
   <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>        
   </li>
