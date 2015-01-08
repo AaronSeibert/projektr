@@ -12,14 +12,15 @@
  */
 
 @import "bourbon";
-@import "bootstrap";
 @import "clients";
 @import "projects";
 @import "revisions";
 @import "screenshots";
 @import "prettyPhoto";
-@import "font-awesome-sprockets";
-@import "font-awesome";
+@import "bootstrap-sprockets";
+@import "bootstrap";
+/* @import "font-awesome-sprockets";
+#@import "font-awesome"; */
 
 
 .float-left, .fl {

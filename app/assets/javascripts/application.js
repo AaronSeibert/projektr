@@ -15,4 +15,5 @@
 //= require jquery.turbolinks
 //= require turbolinks
 //= require turbolinks.redirect
+//= require bootstrap-sprockets
 //= require_tree .
