@@ -6,7 +6,10 @@ bindModalForm = ->
       $("#modal-content").html data
       
 fadeFlashMessages = ->
-  $(".alert").delay(2000).fadeOut(2000)
+  $(".alert").addClass("in").delay(5000).queue (next) ->
+    $(this).removeClass "in"
+    next()
+    return
   
 prettyPhotoBind = ->
   $("a[data-lightbox]").prettyPhoto(
