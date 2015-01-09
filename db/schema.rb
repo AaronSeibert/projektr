@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140814015729) do
+ActiveRecord::Schema.define(version: 20150108214558) do
 
   create_table "clients", force: :cascade do |t|
     t.string   "name"
@@ -90,6 +90,7 @@ ActiveRecord::Schema.define(version: 20140814015729) do
     t.integer  "tenant_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "URL"
   end
 
   add_index "settings", ["tenant_id"], name: "index_settings_on_tenant_id"

@@ -28,7 +28,7 @@
                         <div class="fr">
                             <%= link_to "Edit Name", edit_revision_path(revision, :project_id => @project.id, :format => :js), :class=>"modal-form", :remote => true, data:{ toggle: "modal", target: "#modal-window" }%>
                             <%= link_to "Delete", revision, method: :delete, data: { confirm: 'Are you sure?' } %>
-                            <%= link_to "Add Screenshot", new_screenshot_path(:revision_id => revision) %>
+			    <%= link_to "Add Screenshot", new_screenshot_path(:revision_id => revision, :format => :js), :class=>"modal-form", :remote => true, data:{ toggle: "modal", target: "#modal-window"} %>
                             <%= link_to "Send New Revision Email", sendemail_revision_path(revision) %>
                         </div>
                     <% end %>

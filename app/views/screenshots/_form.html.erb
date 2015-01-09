@@ -1,27 +1,35 @@
-<%= form_for(@screenshot, :html => {:multipart => true}) do |f| %>
-  <% if @screenshot.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@screenshot.errors.count, "error") %> prohibited this screenshot from being saved:</h2>
+<%= render partial: 'global/forms/modal_header', locals: {:title => "Add New Screenshot"} %>
+<%= form_for(@screenshot, :html => {:class => "form-horizontal", :role => "form", 'data-update-target' => 'update-container', :multipart => true }) do |f| %> 
 
-      <ul>
-      <% @screenshot.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
+<div class="modal-body update-container">
+  <div id="form-errors">
+    <%= modal_flash(@screenshot, "screenshot") %>
+  </div>  
+  <%= render "global/flash" %>
+  
   <%= f.hidden_field :revision_id, :value => params[:revision_id] %>
 
-  <div class="field">
-    <%= f.label :name %>
-    <%= f.text_field :name %>
+  <div class="form-group">  
+    <%= f.label :name, :class => "col-lg-3 control-label" %>
+    <div class="col-lg-9">
+      <%= f.text_field :name, :class => "form-control", :autofocus => true %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :image %>
-    <%= f.file_field :image %>
+  
+  <div class="form-group">
+	  <%= f.label :image, 'Upload Image', :class => "col-lg-3 control-label" %>
+	  <div class="col-lg-9">
+		<div class="input-group">
+			<span class="input-group-btn">
+	  			<span class="btn btn-primary btn-file">
+					Select File...<%= f.file_field :image %>
+				</span>
+			</span>
+			<input class="form-control" type="text" readonly="">
+			</div>
+	  </div>
   </div>
-  <div class="actions">
-    <%= f.submit "Upload" %>
-  </div>
+</div>
+  
+<%= render partial: "global/forms/modal_footer", locals: { :f => f } %>
 <% end %>
